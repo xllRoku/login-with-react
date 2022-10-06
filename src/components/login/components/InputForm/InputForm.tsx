@@ -15,19 +15,26 @@ type InputProps = {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-const InputForm = ({ onChange, error, ...inputProps }: InputProps) => {
+const InputForm = ({
+  onChange,
+  error,
+  placeholder,
+  ...inputProps
+}: InputProps) => {
   return (
     <div>
       <div
         className={`${
           error?.isError && "border-red-500"
-        } border-2 bg-slate-200 p-2 rounded-full`}
+        } relative   p-2 rounded-full form-div`}
       >
         <input
-          className="w-full bg-transparent"
+          className="w-full bg-transparent form-input"
           {...inputProps}
           onChange={onChange}
+          placeholder=" "
         />
+        <label className="form-label">{placeholder}</label>
       </div>
       <InputError
         isError={error?.isError}

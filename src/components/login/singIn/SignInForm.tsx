@@ -3,8 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 import InputForm from "../components/InputForm/InputForm";
 import { authenticate } from "@/components/services/authenticate";
 import Snipper from "@/components/snipper/Snipper";
+import { useAuth } from "@/hooks/useAuth";
+import { AuthContextType } from "@/context/auth/types";
 
 const SignIn = () => {
+  const { auth, setAuth } = useAuth() as AuthContextType;
+
   const [values, setValues] = useState({
     email: "",
     password: "",
@@ -18,7 +22,6 @@ const SignIn = () => {
     message: "",
   });
   const [error, setError] = useState("");
-  const [user, setUser] = useState();
   const [isLoading, setIsloading] = useState(false);
   const navigate = useNavigate();
 
@@ -39,7 +42,7 @@ const SignIn = () => {
       .post("sign-in", values)
       .then((response) => {
         setIsloading(true);
-        setUser(response.data);
+        setAuth(response.data.token);
         setTimeout(() => {
           if (response.data.ok === "ok") {
             setValues({ email: "", password: "" });
@@ -98,7 +101,7 @@ const SignIn = () => {
           <input
             type="submit"
             value="Login"
-            className="w-full bg-green-500 cursor-pointer rounded-full font-bold p-2 hover:bg-green-400"
+            className="w-full bg-green-500 cursor-pointer rounded-full font-bold p-2 hover:bg-green-400 text-white"
           />
         )}
         <p className="font-bold">
@@ -109,7 +112,7 @@ const SignIn = () => {
         <Link to="/register">
           <span className="text-green-500 font-bold">Create your account</span>
         </Link>
-        {error && !user && (
+        {error && !auth && (
           <span className="bg-red-500 text-base text-white font-bold text-center p-1 rounded-sm">
             {error}
           </span>

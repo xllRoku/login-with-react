@@ -173,7 +173,7 @@ const SignUp = () => {
         <input
           type="submit"
           value="Register"
-          className="w-full bg-green-500 cursor-pointer rounded-full font-bold p-2 hover:bg-green-400"
+          className="w-full bg-green-500 cursor-pointer rounded-full font-bold p-2 hover:bg-green-400 text-white"
         />
       )}
 
